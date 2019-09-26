@@ -38,6 +38,13 @@ public class GithubActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onSupportNavigateUp(){
+        this.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        return true;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_github);
