@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GitRepo</string>
+    <string name="about">About App</string>
 </resources>

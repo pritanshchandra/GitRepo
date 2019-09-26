@@ -1,7 +1,9 @@
 package com.prytech.gitrepo.ui;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -27,6 +29,12 @@ public class GithubActivity extends AppCompatActivity {
     private ImageView userImg;
     RecyclerViewAdapter recyclerViewAdapter;
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +45,9 @@ public class GithubActivity extends AppCompatActivity {
 
         userImg = findViewById(R.id.userImage);
         githubRepoRV = findViewById(R.id.recyclerView);
+        githubRepoRV.setVisibility(View.GONE);
         githubRepoRV.setLayoutManager(new LinearLayoutManager(this));
         githubRepoRV.setHasFixedSize(true);
-
-        Picasso.get().load(imageUrl).into(userImg);
 
         Retrofit.Builder retrofitBuilder = new Retrofit.Builder()
                 .baseUrl("https://api.github.com/")
@@ -57,13 +64,29 @@ public class GithubActivity extends AppCompatActivity {
                 List<GithubRepository> repos = response.body();
                 recyclerViewAdapter = new RecyclerViewAdapter(GithubActivity.this, repos);
                 githubRepoRV.setAdapter(recyclerViewAdapter);
+                Picasso.get().load(imageUrl).into(userImg, new com.squareup.picasso.Callback() {
+                    @Override
+                    public void onSuccess() {
+                        githubRepoRV.setVisibility(View.VISIBLE);
+                        findViewById(R.id.progressBar).setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        Toast.makeText(GithubActivity.this, ""+e, Toast.LENGTH_SHORT).show();
+                    }
+                });
 
             }
             @Override
             public void onFailure(Call<List<GithubRepository>> call, Throwable t) {
+                Toast.makeText(GithubActivity.this, "Error Occured While Fetching Data " +t, Toast.LENGTH_SHORT).show();
 
             }
         });
+
+
+
     }
 
 }
