@@ -1,6 +1,8 @@
 package com.prytech.gitrepo.ui;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -41,6 +43,13 @@ public class GithubActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp(){
         this.finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.about_app, menu);
         return true;
     }
 
