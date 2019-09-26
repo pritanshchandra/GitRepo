@@ -16,6 +16,7 @@ import com.prytech.gitrepo.ui.adapters.RecyclerViewAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,6 +43,9 @@ public class GithubActivity extends AppCompatActivity {
         setContentView(R.layout.activity_github);
         String UserName = getIntent().getStringExtra("Username");
         final  String imageUrl = "https://www.github.com/"+UserName+".png";
+
+        Objects.requireNonNull(getSupportActionBar()).setTitle("User Data");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         userImg = findViewById(R.id.userImage);
         githubRepoRV = findViewById(R.id.recyclerView);
