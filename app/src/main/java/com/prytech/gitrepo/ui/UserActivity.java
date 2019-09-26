@@ -36,8 +36,8 @@ public class UserActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.AboutApp :
-                Intent launchSettings = new Intent(this, AboutApp.class);
-                startActivity(launchSettings);
+                Intent aboutApp = new Intent(this, AboutApp.class);
+                startActivity(aboutApp);
                 return true;
 
             case R.id.exitApp :
