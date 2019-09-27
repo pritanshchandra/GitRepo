@@ -28,6 +28,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.internal.EverythingIsNonNull;
 
 public class GithubActivity extends AppCompatActivity {
 
@@ -93,6 +94,7 @@ public class GithubActivity extends AppCompatActivity {
 
         githubRepoCall.enqueue(new Callback<List<GithubRepository>>() {
             @Override
+            @EverythingIsNonNull
             public void onResponse(Call<List<GithubRepository>> call, Response<List<GithubRepository>> response) {
 
                 List<GithubRepository> repos = response.body();
@@ -104,17 +106,16 @@ public class GithubActivity extends AppCompatActivity {
                         githubRepoRV.setVisibility(View.VISIBLE);
                         findViewById(R.id.progressBar).setVisibility(View.GONE);
                     }
-
                     @Override
                     public void onError(Exception e) {
                         Toast.makeText(GithubActivity.this, ""+e, Toast.LENGTH_SHORT).show();
                     }
                 });
-
             }
             @Override
+            @EverythingIsNonNull
             public void onFailure(Call<List<GithubRepository>> call, Throwable t) {
-                Toast.makeText(GithubActivity.this, "Error Occured While Fetching Data " +t, Toast.LENGTH_SHORT).show();
+                Toast.makeText(GithubActivity.this, "Error Occurred While Fetching Data " +t, Toast.LENGTH_SHORT).show();
 
             }
         });

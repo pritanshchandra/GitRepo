@@ -27,6 +27,7 @@ public class UserActivity extends AppCompatActivity {
 
     private long backPressedDuration;
     private TextInputLayout userName;
+    @SuppressWarnings("FieldCanBeLocal")
     private MaterialButton fetchUserData;
 
     @Override
@@ -46,17 +47,11 @@ public class UserActivity extends AppCompatActivity {
 
             case R.id.exitApp :
                 new MaterialAlertDialogBuilder(UserActivity.this)
-                        .setMessage("Do you want to Exit App ?")
-                        .setCancelable(false)
+                        .setMessage("Exit App ?")
                         .setPositiveButton("Exit", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 finishAffinity();
-                            }
-                        })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
                             }
                         })
                         .show();
