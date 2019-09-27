@@ -2,4 +2,8 @@
     <string name="app_name">GitRepo</string>
     <string name="about">About App</string>
     <string name="exit">Exit</string>
+    <string name="author_text">Made by - Pritansh Chandra ^_^</string>
+    <string name="rate_app">Rate App on Play Store</string>
+    <string name="view_source">View Source Code</string>
+    <string name="twitter">Follow Me on Twitter</string>
 </resources>
