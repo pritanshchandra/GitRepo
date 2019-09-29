@@ -7,4 +7,7 @@
     <string name="view_source">View Source Code</string>
     <string name="twitter">Follow Me on Twitter</string>
     <string name="content_description">Splash Icon</string>
+    <string name="github_logo">Github Logo</string>
+    <string name="github_username">Github Username</string>
+    <string name="fetch_data">Fetch Data</string>
 </resources>

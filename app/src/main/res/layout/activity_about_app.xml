@@ -8,10 +8,10 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/appBanner"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:src="@drawable/github"
+        android:src="@drawable/github_black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"

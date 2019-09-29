@@ -20,7 +20,7 @@ import com.prytech.gitrepo.services.GithubService;
 import com.prytech.gitrepo.ui.adapters.RecyclerViewAdapter;
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Objects;
 
 import retrofit2.Call;
@@ -35,6 +35,9 @@ public class GithubActivity extends AppCompatActivity {
     private RecyclerView githubRepoRV;
     private ImageView userImg;
     RecyclerViewAdapter recyclerViewAdapter;
+    static int pageNum;
+    String UserName;
+    ArrayList<GithubRepository> githubRepositories = new ArrayList<>();
 
     @Override
     public void onBackPressed() {
@@ -72,11 +75,19 @@ public class GithubActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_github);
-        String UserName = getIntent().getStringExtra("Username");
-        final  String imageUrl = "https://www.github.com/"+UserName+".png";
 
+        pageNum = 1;
+        UserName = getIntent().getStringExtra("Username");
         Objects.requireNonNull(getSupportActionBar()).setTitle("User Data");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        for(int pageIterator = 1; pageIterator <= 5; pageIterator++) {
+            fetchRepositories();
+        }
+    }
+
+    private void fetchRepositories() {
+        final String imageUrl = "https://www.github.com/"+UserName+".png";
 
         userImg = findViewById(R.id.userImage);
         githubRepoRV = findViewById(R.id.recyclerView);
@@ -90,15 +101,19 @@ public class GithubActivity extends AppCompatActivity {
 
         Retrofit retrofit = retrofitBuilder.build();
         GithubService githubService = retrofit.create(GithubService.class);
-        Call<List<GithubRepository>> githubRepoCall = githubService.userRepos(UserName);
+        Call<ArrayList<GithubRepository>> githubRepoCall = githubService.userRepos(UserName, pageNum+"" );
 
-        githubRepoCall.enqueue(new Callback<List<GithubRepository>>() {
+        githubRepoCall.enqueue(new Callback<ArrayList<GithubRepository>>() {
             @Override
             @EverythingIsNonNull
-            public void onResponse(Call<List<GithubRepository>> call, Response<List<GithubRepository>> response) {
+            public void onResponse(Call<ArrayList<GithubRepository>> call, Response<ArrayList<GithubRepository>> response) {
 
-                List<GithubRepository> repos = response.body();
-                recyclerViewAdapter = new RecyclerViewAdapter(GithubActivity.this, repos);
+                ArrayList<GithubRepository> repos = response.body();
+
+                assert repos != null;
+                githubRepositories.addAll(repos);
+
+                recyclerViewAdapter = new RecyclerViewAdapter(GithubActivity.this, githubRepositories);
                 githubRepoRV.setAdapter(recyclerViewAdapter);
                 Picasso.get().load(imageUrl).into(userImg, new com.squareup.picasso.Callback() {
                     @Override
@@ -114,14 +129,12 @@ public class GithubActivity extends AppCompatActivity {
             }
             @Override
             @EverythingIsNonNull
-            public void onFailure(Call<List<GithubRepository>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<GithubRepository>> call, Throwable t) {
                 Toast.makeText(GithubActivity.this, "Error Occurred While Fetching Data " +t, Toast.LENGTH_SHORT).show();
 
             }
         });
-
-
-
+        pageNum++;
     }
 
 }

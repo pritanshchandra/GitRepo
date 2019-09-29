@@ -12,29 +12,20 @@ import com.google.android.material.textview.MaterialTextView;
 import com.prytech.gitrepo.R;
 import com.prytech.gitrepo.models.GithubRepository;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.UserRepoView> {
 
-    Context currentContext;
-    private List<GithubRepository> githubRepository;
+    private Context currentContext;
+    private ArrayList<GithubRepository> githubRepository;
 
-    public RecyclerViewAdapter(Context applicationContext, List<GithubRepository> currentRepository) {
+    public RecyclerViewAdapter(Context applicationContext, ArrayList<GithubRepository> currentRepository) {
 
         this.currentContext = applicationContext;
         this.githubRepository = currentRepository;
     }
 
-    static class UserRepoView  extends RecyclerView.ViewHolder{
 
-        private MaterialTextView userRepo;
-
-        UserRepoView(@NonNull View itemView) {
-            super(itemView);
-
-            userRepo = itemView.findViewById(R.id.userRepo);
-        }
-    }
 
     @NonNull
     @Override
@@ -56,6 +47,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        return githubRepository.size();
+        return githubRepository == null ? 0 : githubRepository.size();
+    }
+
+    static class UserRepoView extends RecyclerView.ViewHolder{
+
+        private MaterialTextView userRepo;
+
+        UserRepoView(@NonNull View itemView) {
+            super(itemView);
+
+            userRepo = itemView.findViewById(R.id.userRepo);
+        }
     }
 }
